@@ -198,26 +198,21 @@ public class Diccionarios <N,R,A,Al,G,D> extends LinkedList <N>{
             }
         }
         Entry temp = new Entry(nombre, ruta, artista, album, genero, duracion);
+        
+        
         listaEnlazada.append(temp);
         size++;
         return ruta;  
     }
     
     public R getRuta(){
-        if (listaEnlazada.getPos()<listaEnlazada.getSize()-1){
-            listaEnlazada.next();
-            System.out.println(listaEnlazada.getPos()+"AAAAAAA");
-            System.out.println(listaEnlazada.getSize()+"ZZZZ");
-            System.out.println(listaEnlazada.getElement().getRuta());
-            return listaEnlazada.getElement().getRuta();
-        }
-        else{
+        if (listaEnlazada.getPos() < listaEnlazada.getSize()){
             listaEnlazada.previous();
             return listaEnlazada.getElement().getRuta();
         }
-        
-        
-        
+        else{
+            return listaEnlazada.getElement().getRuta();
+        }
     }
     
     
@@ -394,6 +389,7 @@ public class Diccionarios <N,R,A,Al,G,D> extends LinkedList <N>{
         this.listaEnlazada=temp;
     }
     
+    
     /**
      * 
      * @return Regresa una colección que contiene todos los registros (canción,ruta)
@@ -412,23 +408,27 @@ public class Diccionarios <N,R,A,Al,G,D> extends LinkedList <N>{
     
      public static void main(String[]args){
         Diccionarios dicc=new Diccionarios();
-        System.out.println(dicc.put("1", "2","3","5","4","6"));
-        System.out.println(dicc.put("12", "11","7","8","9","0"));
-        
+        System.out.println(dicc.put("Te conozco", "C://hola","Ricardo","pop","ada","asd"));
+        System.out.println(dicc.put("Mas que ayer", "B://bkjskj","Percanse","Regge","sdas","passm"));
+        System.out.println(dicc.put("Fuiste Tu", "P://jkjuh","Arjona","ruts","jpoo","qert"));
         
         System.out.println("**************");
         //System.out.println(dicc.get(3));
         
         System.out.println(dicc.nombreSet());
-        
+        System.out.println(dicc.rutaSet());
         System.out.println(dicc.getPos());
         dicc.next();
         System.out.println(dicc.getPos());
+        System.out.println(dicc.size()+"SFS");
+        System.out.println(dicc.getRuta());
+        System.out.println(dicc.getPos()+"QQQQ");
+        dicc.next();
         System.out.println(dicc.getRuta());
         System.out.println(dicc.getPos());
         System.out.println(dicc.size());
         
-        System.out.println(dicc.size());
+        
     }
     
 }

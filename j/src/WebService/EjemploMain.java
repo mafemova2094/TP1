@@ -11,12 +11,12 @@ import org.xml.sax.SAXException;
 
 /**
  *
- * @author jpfcr8
+ * @author Ricardo Araya
  */
 public class EjemploMain {
     public static void main(String [] args) throws ParserConfigurationException, SAXException, IOException{
         EjemploConexion service = new EjemploConexion();
-        EjemploParser parser = new EjemploParser();
+        XML parser = new XML();
         parser.imprimir();
     }
     

@@ -5,45 +5,47 @@
  */
 package Interfaz;
 
-
 import Reproductor.MetaDatos;
+import Reproductor.ObtenerLetra;
 import Reproductor.Opciones;
+import WebService.XML;
 import estructurasgenerictp1.Diccionarios;
+import estructurasgenerictp1.DoubleLinkedListPrueba;
 import estructurasgenerictp1.LQueue;
+import estructurasgenerictp1.LinkedList2Argumentos;
 import j.DoubleLinkedList;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
 
 /**
  *
  * @author Ricardo A
  */
 public class Grafica extends javax.swing.JFrame implements Runnable {
-    
-    
-    
-    
+
     /**
      * Creates new form Configuracion
      */
     public Grafica() {
-        
-        
+
         this.setTitle("TecMusic");
         initComponents();
+        this.setResizable(false);
         this.setLocationRelativeTo(null);
-        Reproductor=new Opciones();
-        cola=new Diccionarios();
-        
-    
-    
+        Reproductor = new Opciones();
+        cola = new DoubleLinkedListPrueba();
+        ListaGeneral=new DoubleLinkedListPrueba();
+
     }
 
     /**
@@ -57,14 +59,14 @@ public class Grafica extends javax.swing.JFrame implements Runnable {
 
         Play = new javax.swing.JButton();
         Stop = new javax.swing.JButton();
-        Cancion = new javax.swing.JButton();
+        Agegar = new javax.swing.JButton();
         Atras = new javax.swing.JButton();
         Siguiente = new javax.swing.JButton();
         PalabraBuscar = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        Busqueda = new javax.swing.JButton();
         OpcionesBusqueda = new javax.swing.JComboBox();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        Eliminar = new javax.swing.JButton();
+        Modificar = new javax.swing.JButton();
         EtiLetra = new javax.swing.JLabel();
         EtiCancion = new javax.swing.JLabel();
         EtiArtista = new javax.swing.JLabel();
@@ -76,7 +78,7 @@ public class Grafica extends javax.swing.JFrame implements Runnable {
         ListaDuracion = new java.awt.List();
         ListaAlbum = new java.awt.List();
         ListaGenero = new java.awt.List();
-        ListaCancion2 = new java.awt.List();
+        ListaLetra = new java.awt.TextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -94,14 +96,19 @@ public class Grafica extends javax.swing.JFrame implements Runnable {
             }
         });
 
-        Cancion.setText("Agregar");
-        Cancion.addActionListener(new java.awt.event.ActionListener() {
+        Agegar.setText("Agregar");
+        Agegar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CancionActionPerformed(evt);
+                AgegarActionPerformed(evt);
             }
         });
 
         Atras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/atras.jpg"))); // NOI18N
+        Atras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AtrasActionPerformed(evt);
+            }
+        });
 
         Siguiente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/siguiente.jpg"))); // NOI18N
         Siguiente.addActionListener(new java.awt.event.ActionListener() {
@@ -116,16 +123,21 @@ public class Grafica extends javax.swing.JFrame implements Runnable {
             }
         });
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Buscar.png"))); // NOI18N
+        Busqueda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Buscar.png"))); // NOI18N
+        Busqueda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BusquedaActionPerformed(evt);
+            }
+        });
 
         OpcionesBusqueda.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Artista", "Album", "Genero", "Cancion" }));
 
-        jButton2.setText("Eliminar");
+        Eliminar.setText("Eliminar");
 
-        jButton3.setText("Modificar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        Modificar.setText("Modificar");
+        Modificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                ModificarActionPerformed(evt);
             }
         });
 
@@ -148,12 +160,18 @@ public class Grafica extends javax.swing.JFrame implements Runnable {
         EtiDuracion.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         EtiDuracion.setText("Duración");
 
+        ListaArtista.setEnabled(false);
+
+        ListaDuracion.setEnabled(false);
+
+        ListaAlbum.setEnabled(false);
         ListaAlbum.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ListaAlbumActionPerformed(evt);
             }
         });
 
+        ListaGenero.setEnabled(false);
         ListaGenero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ListaGeneroActionPerformed(evt);
@@ -167,9 +185,9 @@ public class Grafica extends javax.swing.JFrame implements Runnable {
             .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
-                    .addComponent(Cancion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(Modificar, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
+                    .addComponent(Agegar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Eliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(202, 202, 202)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
@@ -191,8 +209,8 @@ public class Grafica extends javax.swing.JFrame implements Runnable {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(OpcionesBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29))
+                        .addComponent(Busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 148, Short.MAX_VALUE)
                         .addComponent(EtiAlbum)
@@ -205,6 +223,12 @@ public class Grafica extends javax.swing.JFrame implements Runnable {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(EtiLetra)
+                        .addGap(605, 605, 605))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(ListaLetra, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(394, 394, 394))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(ListaCancion, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ListaArtista, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -214,36 +238,26 @@ public class Grafica extends javax.swing.JFrame implements Runnable {
                         .addComponent(ListaGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ListaDuracion, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(22, 22, 22))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(ListaCancion2, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(395, 395, 395))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(EtiLetra)
-                        .addGap(605, 605, 605))))
+                        .addGap(22, 22, 22))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(PalabraBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(OpcionesBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Atras, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(Play, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(Siguiente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Stop, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(PalabraBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(OpcionesBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(Atras, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(Play, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                .addComponent(Siguiente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(Stop, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(Cancion, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(Agegar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -261,7 +275,7 @@ public class Grafica extends javax.swing.JFrame implements Runnable {
                                     .addComponent(EtiAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(ListaArtista, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ListaArtista, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addComponent(ListaCancion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(ListaDuracion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
                             .addComponent(ListaAlbum, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
@@ -269,42 +283,43 @@ public class Grafica extends javax.swing.JFrame implements Runnable {
                         .addGap(19, 19, 19)
                         .addComponent(EtiLetra)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ListaCancion2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ListaLetra, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Modificar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void CancionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancionActionPerformed
+    private void AgegarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgegarActionPerformed
         JFileChooser dig = new JFileChooser();  //Crea un objeto de dialogo JFileChooser
-        FileNameExtensionFilter ex=new FileNameExtensionFilter("MP3","mp3");
+        FileNameExtensionFilter ex = new FileNameExtensionFilter("MP3", "mp3");
         dig.setMultiSelectionEnabled(rootPaneCheckingEnabled);
         dig.setFileFilter(ex);
         int option = dig.showOpenDialog(this);  // Abre la ventana en dialogo
-        if (option == JFileChooser.APPROVE_OPTION){
+        if (option == JFileChooser.APPROVE_OPTION) {
             //System.out.println(dig.getFileView());
-            
-            try {
-                String file = dig.getSelectedFile().getPath();  //Obtener ruta y nombre al hacer click
-                //Muestra nombre del archivo
-                RutaAnterior=Ruta;
-                Ruta=file;
-                System.out.println(file);
-                
-                if(FlagCancion==false){
+
+            String file = dig.getSelectedFile().getPath();  //Obtener ruta y nombre al hacer click
+            //Muestra nombre del archivo
+            Ruta = file;
+            System.out.println(file);
+
+            if (FlagCancion == false) {
+                try {
                     Reproductor.Open(Ruta);
-                    MetaDatos temp=new MetaDatos();
+                    MetaDatos temp = new MetaDatos();
                     temp.meta(Ruta);
 
                     Reproductor.Play();
-                    FlagCancion=true;
-                    cola.put(temp.getTitulo(),Ruta,temp.getArtista(),temp.getAlbum(),temp.getgenero(),temp.getduracionMin());
-                    System.out.println(cola.size());
+                    FlagCancion = true;
+                    cola.append(temp.getTitulo(), Ruta, temp.getArtista(), temp.getAlbum(), temp.getgenero(), temp.getduracionMin());
+                    ListaGeneral.append(temp.getTitulo(), Ruta, temp.getArtista(), temp.getAlbum(), temp.getgenero(), temp.getduracionMin());
+                    System.out.println(cola.getPos());
+
                     ListaCancion.add(temp.getTitulo());
                     ListaArtista.add(temp.getArtista());
                     ListaAlbum.add(temp.getAlbum());
@@ -312,15 +327,33 @@ public class Grafica extends javax.swing.JFrame implements Runnable {
                     double total = temp.getduracionMin();
                     String total2 = String.valueOf(total);
                     ListaDuracion.add(total2);
-                    
+
+                    try {
+                        ObtenerLetra letra = new ObtenerLetra();
+                        String letraCancion = letra.getLetra(temp.getArtista(), temp.getTitulo());
+                        ListaLetra.append(letraCancion);
+                    } catch (Exception e) {
+                        ListaLetra.append("Letra Desconocida");
+                    }
+
+                    System.out.println(cola.getSize() + "*++++++++++");
+                    System.out.println(cola.getPos());
+
+                } catch (Exception ex1) {
+                    Logger.getLogger(Grafica.class.getName()).log(Level.SEVERE, null, ex1);
                 }
-                else{
+
+            } else {
+                try {
                     Reproductor.Continue();
-                    MetaDatos temp=new MetaDatos();
+                    MetaDatos temp = new MetaDatos();
                     temp.meta(Ruta);
-                    
-                    cola.put(temp.getTitulo(),Ruta,temp.getArtista(),temp.getAlbum(),temp.getgenero(),temp.getduracionMin());
-                    System.out.println(cola.size());
+
+                    cola.append(temp.getTitulo(), Ruta, temp.getArtista(), temp.getAlbum(), temp.getgenero(), temp.getduracionMin());
+                    ListaGeneral.append(temp.getTitulo(), Ruta, temp.getArtista(), temp.getAlbum(), temp.getgenero(), temp.getduracionMin());
+                    System.out.println(cola.getSize() + "Size");
+                    System.out.println(cola.getPos() + "Pos");
+
                     ListaCancion.add(temp.getTitulo());
                     ListaArtista.add(temp.getArtista());
                     ListaAlbum.add(temp.getAlbum());
@@ -328,39 +361,36 @@ public class Grafica extends javax.swing.JFrame implements Runnable {
                     double total = temp.getduracionMin();
                     String total2 = String.valueOf(total);
                     ListaDuracion.add(total2);
+                    //System.out.println(cola.getRuta());
+                } catch (Exception ex1) {
+                    Logger.getLogger(Grafica.class.getName()).log(Level.SEVERE, null, ex1);
                 }
-                //canc=dig.getSelectedFiles();
-                /**if(canc.length>1){
-                    System.out.println(Ruta=file);
-                    for(int i=0;i<canc.length;i++){
-                        System.out.println(canc[i]);
-                    }
-                    
-                    System.out.println(direc);
-                    }
-                else{
-                    Ruta=file;
-                    System.out.println(Ruta);
-                }**/
-                
-            } catch (Exception e) {
-                System.out.println("Hola");
-                return;
             }
-        }       
-    }//GEN-LAST:event_CancionActionPerformed
+            //canc=dig.getSelectedFiles();
+            /**
+             * if(canc.length>1){ System.out.println(Ruta=file); for(int
+             * i=0;i<canc.length;i++){ System.out.println(canc[i]); }
+             *
+             * System.out.println(direc); } else{ Ruta=file;
+             * System.out.println(Ruta);
+                }*
+             */
+
+        } else {
+            System.out.println("Sleccione una ruta");
+        }
+    }//GEN-LAST:event_AgegarActionPerformed
 
     private void PlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PlayActionPerformed
         try {
-            if(FlagCancion==true){
+            if (FlagCancion == true) {
                 Reproductor.Pause();
-                FlagCancion=false;
-            }
-            else{
+                FlagCancion = false;
+            } else {
                 Reproductor.Continue();
-                FlagCancion=true;
+                FlagCancion = true;
             }
-            
+
         } catch (Exception ex) {
             System.out.println("error");
             Logger.getLogger(Grafica.class.getName()).log(Level.SEVERE, null, ex);
@@ -370,72 +400,65 @@ public class Grafica extends javax.swing.JFrame implements Runnable {
     private void StopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StopActionPerformed
         try {
             Reproductor.Stop();
-            FlagCancion=false;
+            FlagCancion = false;
         } catch (Exception ex) {
             Logger.getLogger(Grafica.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_StopActionPerformed
 
     private void PalabraBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PalabraBuscarActionPerformed
-        
+
     }//GEN-LAST:event_PalabraBuscarActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModificarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_ModificarActionPerformed
 
     private void SiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SiguienteActionPerformed
-        System.out.println(cola.getPos()+"AAA");
-        System.out.println(cola.size()+"AAA");
-        if(cola.getPos()<cola.size()-1){
-            System.out.println(cola.getPos()+"BBB");
+        if (cola.getPos() < cola.getSize() - 1) {
+            cola.next();
+            Object ruta = cola.getRuta();
             try {
-                
-                String ruta=(String) cola.getRuta();
-                try {
-                    Reproductor.Open(ruta);
-                } catch (Exception ex) {
-                    Logger.getLogger(Grafica.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                Reproductor.Open((String) ruta);
                 Reproductor.Play();
-                
-            } 
-            catch (NullPointerException ex) {
-                try {
-                    Reproductor.Stop();
-                } catch (Exception ex1) {
-                    Logger.getLogger(Grafica.class.getName()).log(Level.SEVERE, null, ex1);
-                }
-                return;
             } catch (Exception ex) {
                 Logger.getLogger(Grafica.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-        }
-        else{
-            System.out.println(cola.getPos()+"8888811111");
-            System.out.println(cola.size()+"sxkv");
+            try {
+                ObtenerLetra letra = new ObtenerLetra();
+                String artista=(String) cola.getArtista();
+                String nombreC=(String) cola.getNombre();
+                String letraCancion = letra.getLetra(artista, nombreC);
+                ListaLetra.setText(null);
+                ListaLetra.append(letraCancion);
+            } catch (Exception e) {
+                ListaLetra.append("Letra Desconocida");
+            }
+        } else {
             cola.goToStart();
-            
-            System.out.println(cola.getPos()+"''''''");
-            String ruta=(String) cola.getRuta();
+            cola.next();
+            Object ruta = cola.getRuta();
             try {
-                Reproductor.Open(ruta);
-            } catch (Exception ex) {
-                Logger.getLogger(Grafica.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            try {
+                Reproductor.Open((String) ruta);
                 Reproductor.Play();
             } catch (Exception ex) {
                 Logger.getLogger(Grafica.class.getName()).log(Level.SEVERE, null, ex);
             }
+            try {
+                ObtenerLetra letra = new ObtenerLetra();
+                String artista=(String) cola.getArtista();
+                String nombreC=(String) cola.getNombre();
+                String letraCancion = letra.getLetra(artista, nombreC);
+                ListaLetra.setText(null);
+                ListaLetra.append(letraCancion);
+            } catch (Exception e) {
+                ListaLetra.append("Letra Desconocida");
+            }
         }
-        
-        
-        
-        
-        
+
+
     }//GEN-LAST:event_SiguienteActionPerformed
+
 
     private void ListaAlbumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListaAlbumActionPerformed
         // TODO add your handling code here:
@@ -444,15 +467,172 @@ public class Grafica extends javax.swing.JFrame implements Runnable {
     private void ListaGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListaGeneroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ListaGeneroActionPerformed
-    
-    
-    
-    
+
+    private void AtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AtrasActionPerformed
+        if (cola.getPos() == -1) {
+            cola.goToEnd();
+            Object ruta = cola.getRuta();
+            try {
+                Reproductor.Open((String) ruta);
+                Reproductor.Play();
+            } catch (Exception ex) {
+                Logger.getLogger(Grafica.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                ObtenerLetra letra = new ObtenerLetra();
+                String artista=(String) cola.getArtista();
+                String nombreC=(String) cola.getNombre();
+                String letraCancion = letra.getLetra(artista, nombreC);
+                ListaLetra.setText(null);
+                ListaLetra.append(letraCancion);
+            } catch (Exception e) {
+                ListaLetra.append("Letra Desconocida");
+            }
+
+        } else {
+            cola.previous();
+            Object ruta = cola.getRuta();
+            try {
+                Reproductor.Open((String) ruta);
+                Reproductor.Play();
+            } catch (Exception ex) {
+                Logger.getLogger(Grafica.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                ObtenerLetra letra = new ObtenerLetra();
+                String artista=(String) cola.getArtista();
+                String nombreC=(String) cola.getNombre();
+                String letraCancion = letra.getLetra(artista, nombreC);
+                ListaLetra.setText(null);
+                ListaLetra.append(letraCancion);
+            } catch (Exception e) {
+                ListaLetra.append("Letra Desconocida");
+            }
+        }
+
+
+    }//GEN-LAST:event_AtrasActionPerformed
+
+    private void BusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BusquedaActionPerformed
+        VentanaInterfaz ventana=new VentanaInterfaz();
+        ventana.setVisible(true);
+        String Name= PalabraBuscar.getText();
+        PalabraBuscar.removeAll();
+        String OpcionesGenero=(String) OpcionesBusqueda.getSelectedItem();
+        if(Name==""){
+            return;
+        }
+        else{
+            if("Artista".equals(OpcionesGenero)){
+                DoubleLinkedListPrueba list=ListaGeneral.buscarArtista((Object) Name);
+
+                
+                
+                OpcionesGenero="artist";
+                try {
+                    XML xml=new XML();
+                    xml.obtenerXML(OpcionesGenero, Name);
+                    xml.Prueba();
+                    LinkedList2Argumentos lista=xml.imprimir();
+                    lista.goToStart();
+                    lista.next();
+                    for(int i=0;i<=lista.getSize()-1;i++){
+                        ventana.NombreXML.add((String) lista.getBanda());
+                        ventana.ArtistaXML.add((String) lista.getArtist());
+                        lista.next();
+                    }
+                    
+                    ListaGeneral.goToStart();
+                    ListaGeneral.next();
+                    DoubleLinkedListPrueba artistas=ListaGeneral.buscarArtista(Name);
+                    for(int j=0;j<=artistas.getSize()-1;j++){
+                        ventana.NombreL.add((String) artistas.getNombre());
+                        ventana.ArtistaL.add((String) artistas.getArtista());
+                        ventana.AlbumL.add((String) artistas.getAlbum());    
+                        ventana.GeneroL.add((String) artistas.getGenero());
+                        ventana.DuracionL.add((String) artistas.getDuracion());
+                        artistas.next();
+                    }
+                    
+                    
+                    
+                    //xml.imprimir();
+                    
+                    
+                    
+                    
+                } catch (ParserConfigurationException ex) {
+                    Logger.getLogger(Grafica.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SAXException ex) {
+                    Logger.getLogger(Grafica.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(Grafica.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+            
+            
+            if("Album".equals(OpcionesGenero)){
+                DoubleLinkedListPrueba lis=ListaGeneral.buscarAlbum(Name);
+            
+                
+            }
+            
+            if("Genero".equals(OpcionesGenero)){
+                DoubleLinkedListPrueba lis=ListaGeneral.buscarGenero(Name);
+                
+                
+            }
+            
+            if("Nombre".equals(OpcionesGenero)){
+                DoubleLinkedListPrueba lis=ListaGeneral.buscarNombre(Name);
+                
+                
+                
+                
+                
+                
+                OpcionesGenero="title";
+                try {
+                    XML xml=new XML();
+                    xml.obtenerXML(OpcionesGenero, Name);
+                    
+                    //xml.imprimir();
+                    
+                    
+                    
+                    
+                } catch (ParserConfigurationException ex) {
+                    Logger.getLogger(Grafica.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SAXException ex) {
+                    Logger.getLogger(Grafica.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(Grafica.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+        }
+        
+        
+    }//GEN-LAST:event_BusquedaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Agegar;
     private javax.swing.JButton Atras;
-    private javax.swing.JButton Cancion;
+    private javax.swing.JButton Busqueda;
+    private javax.swing.JButton Eliminar;
     private javax.swing.JLabel EtiAlbum;
     private javax.swing.JLabel EtiArtista;
     private javax.swing.JLabel EtiCancion;
@@ -462,44 +642,34 @@ public class Grafica extends javax.swing.JFrame implements Runnable {
     private java.awt.List ListaAlbum;
     private java.awt.List ListaArtista;
     private java.awt.List ListaCancion;
-    private java.awt.List ListaCancion2;
     private java.awt.List ListaDuracion;
     private java.awt.List ListaGenero;
+    private java.awt.TextArea ListaLetra;
+    private javax.swing.JButton Modificar;
     private javax.swing.JComboBox OpcionesBusqueda;
     private javax.swing.JTextField PalabraBuscar;
     private javax.swing.JButton Play;
     private javax.swing.JButton Siguiente;
     private javax.swing.JButton Stop;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     // End of variables declaration//GEN-END:variables
-    boolean FlagCancion=false;
+    boolean FlagCancion = false;
     Opciones Reproductor;
-    String Ruta=null;
-    String RutaAnterior=null;
+    String Ruta = null;
+    String RutaAnterior = null;
     File[] canc;
     String direc;
-    Diccionarios cola;
+    DoubleLinkedListPrueba cola;
     
+    DoubleLinkedListPrueba ListaGeneral;
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     @Override
     public void run() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     public static void main(String args[]) {
-        
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Grafica().setVisible(true);

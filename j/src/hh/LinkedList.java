@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package j;
+package hh;
 
 /**
  * Se implementa una lista simple

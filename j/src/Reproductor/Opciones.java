@@ -72,7 +72,9 @@ public class Opciones {
        Opciones can=new Opciones();
        can.Open("C:\\Users\\Ricardo Araya\\Documents\\Reproductor\\desnuda.mp3");
        can.Play();
-   
+       Thread.sleep(9000);
+       can.Open("C:\\Users\\Ricardo Araya\\Documents\\Mujeres.mp3");
+       can.Play();
    
    
    }
