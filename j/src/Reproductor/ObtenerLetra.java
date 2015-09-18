@@ -7,8 +7,8 @@
 package Reproductor;
 
 /**
- *
- * @author Usuario
+ * Librerías necesarias para Obtener la letra de las canciones
+ * @author Mau
  */
 import java.io.IOException;
 import org.jsoup.Jsoup;
@@ -17,12 +17,22 @@ import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
  
+/**
+ *
+ * @author Mau Clase Obtener letra
+ */
 public class ObtenerLetra {
  
-   private final static String url = "http://www.songlyrics.com";
+   private final static String url = "http://www.songlyrics.com"; // URL de donde se toman las letras
  
- 
-   public  String getLetra( String Artista, String Nombre) throws IOException {
+    /**
+     *
+     * @param Artista información requerida
+     * @param Nombre información requerida
+     * @return letra de la canción 
+     * @throws IOException si no se encuentra la canción
+     */
+    public  String getLetra( String Artista, String Nombre) throws IOException {
      String letra = Nombre+"\n";
      Document pagina = Jsoup.connect(url+ "/"+Artista.replace(" ", "-").toLowerCase()+"/"+Nombre.replace(" ", "-").toLowerCase()+"-lyrics/").get();
      String titulo = pagina.title();
@@ -36,7 +46,12 @@ public class ObtenerLetra {
      return letra;
    }
 
-   public static void main(String args[]) throws IOException{
+    /**
+     *
+     * @param args Main de la clase Obtener letra
+     * @throws IOException
+     */
+    public static void main(String args[]) throws IOException{
        ObtenerLetra h=new ObtenerLetra();
        
        System.out.println(h.getLetra("Ricardo Arjona", "Fuiste tu"));
