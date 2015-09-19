@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package j;
+package estructurasgenerictp1; // nombre del paquete
 
 import java.util.ArrayList;
 
@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public class ArrayStack <T> { // pila basada en arreglos genérico de tipo T
     private ArrayList <T> arreglo=new ArrayList <T>();  // Atributos, es una instanciación de un arreglo
-    private int size;
+    private int size; // atributo
     
     // constructor
     
@@ -69,7 +69,7 @@ public class ArrayStack <T> { // pila basada en arreglos genérico de tipo T
     }   
 
     /**
-     * 
+     * No recibe ningún parámetro como entrada
      * @return Regresa el número de elementos en la pila
      */
     
@@ -78,8 +78,9 @@ public class ArrayStack <T> { // pila basada en arreglos genérico de tipo T
     }
     
     /**
-     * 
+     * Restricciones: True si está vacío y False si está con elementos
      * @return un booleano si está vacía o sino 
+     * No recibe ningún parámetro como entrada
      */
     
     public boolean isEmpty(){
@@ -93,10 +94,11 @@ public class ArrayStack <T> { // pila basada en arreglos genérico de tipo T
     
     /**
      * vacía la pila
+     * No recibe ningun elemento como entrada
      */
     
     public void clear(){
-        ArrayList <T> nuevo=new ArrayList <T>();
+        ArrayList <T> nuevo=new ArrayList <T>(); // instanciación del arraylist
         arreglo=nuevo;
         System.out.println(arreglo.size());
         size=0;

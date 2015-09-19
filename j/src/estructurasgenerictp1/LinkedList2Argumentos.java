@@ -9,27 +9,50 @@ package estructurasgenerictp1;
 /**
  * Se implementa una lista simple
  * @author Mau
+ * @param <A>
+ * @param <B>
  */
 public class LinkedList2Argumentos <A,B>{ // LinkedList es genérico de tipo A
     
+    /**
+     * Generics
+     * @param <E>
+     * @param <B>
+     */
+        
     public class Node <E,B> { // Clase nodo de  tipo E
         //atributos
         private E artists; // Elemento de tipo E
-        private B banda;
+        private B banda; // elemento banda de tipo B
         private Node<E,B> next; // Nodo de tipo E
         
+        /**
+         * No recibe ningún parámetro como entrada
+         * Nodo especial
+         */
         public Node (){
             this.artists=null; //nodo especial
             this.banda=null;
             this.next=null;
         }
         
+        /**
+         * Entradas:
+         * @param element de tipo E
+         * @param banda de tipo B
+         */
         public Node (E element,B banda){ // nodo que recibe un elemento de tipo E
             this.artists=element;
             this.banda=banda;
             this.next=null;
         }
         
+        /**
+         * Entradas:
+         * @param element de tipo E
+         * @param banda de ipo B
+         * @param next de tipo Node generico 
+         */
         public Node (E element,B banda, Node<E,B> next){ // nodo que recibe un elemento de tipo E, y dos punteros
             this.artists=element;
             this.banda=banda;
@@ -37,27 +60,54 @@ public class LinkedList2Argumentos <A,B>{ // LinkedList es genérico de tipo A
         }
         
         //métodos 
-        public B getBanda(){
+
+        /**
+         * No recibe ningún parámetro como entrada
+         * @return
+         */
+                public B getBanda(){
             return this.banda;
         }
         
+        /**
+         * Entrada:
+         * @param element de tipo B
+         * Por ser un void no retoan nada
+         */
         public void setBanda (B element){ //Actualiza un elemento. Por ser un void no se devuelve nada. Se recibe un elemento de tipo E como parámetro.
             this.banda=element; 
             
         }
         
+        /**
+         * No recibe ningún parámetro como entrada
+         * @return consulta artista de tipo E
+         */
         public E getArtist(){ // consultar un elemento
             return this.artists;
         }
         
+        /**
+         * Actualiza el artista
+         * Entrada: @param element de tipo E
+         */
         public void setArtist (E element){ //Actualiza un elemento. Por ser un void no se devuelve nada. Se recibe un elemento de tipo E como parámetro.
             this.artists=element; 
             
         }
-         public Node<E,B> getNext(){ // Obtiene el siguiente elemento
+
+        /**
+         * No recibe ningún parámetro como entrada
+         * @return obtiene el siguiente de tipo nodo 
+         */
+        public Node<E,B> getNext(){ // Obtiene el siguiente elemento
             return this.next;
         }
         
+        /**
+         * Por ser un void no retorna nada
+         * @param next de tipo nodo generico
+         */
         public void setNext (Node<E,B> next){ //Por ser un void no se devuelve nada. Se recibe un elemento de tipo E como parámetro.
             this.next=next; 
             
@@ -72,6 +122,11 @@ public class LinkedList2Argumentos <A,B>{ // LinkedList es genérico de tipo A
     
     //constructores
     
+    /**
+     * No recibe ningún parámetro como entrada
+     * Nodo especial
+     */
+        
     public LinkedList2Argumentos (){ // nodo especial en el cual el current es igual al tail y a la cabeza
         this.head=new Node<>();
         this.current=head;
@@ -85,6 +140,7 @@ public class LinkedList2Argumentos <A,B>{ // LinkedList es genérico de tipo A
     /**
      * Inserta un elemento. Crea un nuevo nodo para poderlo insertar en el current
      * @param element debe ser de tipo A
+     * @param banda
      */
     
     public void insert (A element,B banda){
@@ -99,7 +155,9 @@ public class LinkedList2Argumentos <A,B>{ // LinkedList es genérico de tipo A
     
     /**
      * Concatena un elemento en la lista doblemente enlazada. Se concatena al final.
+     * Entradas:
      * @param element debe ser de tipo A
+     * @param banda de tipo B
      */
     
     public void append (A element,B banda){
@@ -122,6 +180,7 @@ public class LinkedList2Argumentos <A,B>{ // LinkedList es genérico de tipo A
     /**
      * Obtiene el elemento
      * @return el elemento que está en el current
+     * No recibe ningún parámetro como entrada
      */
     
     public B getBanda(){
@@ -133,8 +192,11 @@ public class LinkedList2Argumentos <A,B>{ // LinkedList es genérico de tipo A
         }
     }
     
-    
-    
+    /**
+     * No recibe ningún parámetro como entrada
+     * @return obtiene artista de tipo A
+     * Restricciones: excepcion si Si es un puntero al final y está vacío, nos tira error si solicitamos el elemento
+     */
     public A getArtist(){
         try{
             return (A)this.current.getArtist(); // Hay que convertirlo ya que son de diferente tipo uno es E y el otro A
@@ -147,6 +209,7 @@ public class LinkedList2Argumentos <A,B>{ // LinkedList es genérico de tipo A
     
     /**
      * elimina un elemento
+     * No recibe ningún parámetro como entrada
      */
     
     public void remove(){
@@ -173,19 +236,25 @@ public class LinkedList2Argumentos <A,B>{ // LinkedList es genérico de tipo A
     /**
      * Modifica el elemento
      * @param element de tipo A
+     * Por ser vid no retorna
      */
     
     public void updateArtist(A element){
         this.current.setArtist(element);    
     }
     
-    
+    /**
+     *por ser void no retorna
+     * @param banda de tipo B
+     */
     public void updateBanda(B banda){
         this.current.setBanda(banda);    
     }
     
     /**
      * Vacía la lista
+     * No recibe ningún parámetro como entrada 
+     * Por ser void no retorna
      */
     
     public void clear(){
@@ -197,7 +266,7 @@ public class LinkedList2Argumentos <A,B>{ // LinkedList es genérico de tipo A
     }
     
     /**
-     *
+     *No recibe ningún parámetro como entrada
      * ir al elemento siguiente
      */
     
@@ -207,7 +276,7 @@ public class LinkedList2Argumentos <A,B>{ // LinkedList es genérico de tipo A
     }
     
     /**
-     *
+     * No recibe ningún parámetro como entrada
      * ir al elemento anterior
      */
     
@@ -221,8 +290,8 @@ public class LinkedList2Argumentos <A,B>{ // LinkedList es genérico de tipo A
     }
     
     /**
-     *
-     * @return el tamaño
+     * No recibe ningún parámetro como entrada
+     * @return el tamaño de tipo int
      */
     
     public int getSize(){
@@ -230,8 +299,8 @@ public class LinkedList2Argumentos <A,B>{ // LinkedList es genérico de tipo A
     }
     
     /**
-     *
-     * @return la posición
+     * No recibe ningún parámetro como entrada
+     * @return la posición de tipo int
      */
     
     public int getPos(){
@@ -240,6 +309,8 @@ public class LinkedList2Argumentos <A,B>{ // LinkedList es genérico de tipo A
     
     /**
      * mover al principio de la lista
+     * No recibe ningún parámetro como entrada
+     * No retorna
      */
     
     public void goToStart(){
@@ -249,6 +320,7 @@ public class LinkedList2Argumentos <A,B>{ // LinkedList es genérico de tipo A
     
     /**
      * mover al final de la lista
+     * No recibe ningún parámetro como entrada
      */
     
     public void goToEnd(){
@@ -257,7 +329,7 @@ public class LinkedList2Argumentos <A,B>{ // LinkedList es genérico de tipo A
     }
     
     /**
-     * 
+     * No recibe ningún parámetro como entrada
      * @return booleano, para saber si la lista está vacía o no 
      */
     

@@ -4,42 +4,43 @@
  * and open the template in the editor.
  */
 
-package estructurasgenerictp1;
+package estructurasgenerictp1; // nombre del paquete
 
-import java.util.ArrayList;
+import java.util.ArrayList; // importación del arraylist
 
 /**
  *
  * @author Mau
- * @param <N> llave
- * @param <R> valor
- * @param <A> artista
- * @param <Al> album
- * @param <G> genero
- * @param <D> duracion 
+ * Entradas: 
+ * @param <N> llave de tipo N
+ * @param <R> valor de tipo R
+ * @param <A> artista de tipo A
+ * @param <Al> album de tipo Al
+ * @param <G> genero de tipo G
+ * @param <D> duracion  de tipo D
  */
-public class Diccionarios <N,R,A,Al,G,D> extends LinkedList <N>{
+public class Diccionarios <N,R,A,Al,G,D> extends LinkedList <N>{ // nombre de la clase
     
     /**
      * Clase Entry genérico de tipo
-     * @param <N> nombre
-     * @param <R> ruta
-     * @param <A> artista
-     * @param <Al> album
-     * @param <G> genero
-     * @param <D> duracion
+     * @param <N> nombre de tipo N
+     * @param <R> ruta de tipo R
+     * @param <A> artista de tipo A
+     * @param <Al> album de tipo Al
+     * @param <G> genero de tipo G
+     * @param <D> duracion  de tipo D
      */
     
-    private class Entry <N,R,A,Al,G,D>{ 
+    private class Entry <N,R,A,Al,G,D>{  // nombre de la clase genérica
         
         //atributos
         
-        private N nombre;
-        private R ruta;
-        private A artista;
-        private Al album;
-        private G genero;
-        private D duracion;
+        private N nombre; // atributo nombre de tipo N
+        private R ruta; // atributo ruta de tipo R
+        private A artista; // atributo artosta de tipo A
+        private Al album; // atributo Album de tipo Al
+        private G genero; // atributo género de tipo G
+        private D duracion; // atributo duración de tipo D
         
         //constructor, sólo uno, el cual recibe obligatoriamente dos parámetros
         public Entry(N nombre,R ruta, A artista, Al album, G genero, D duracion){
@@ -57,6 +58,7 @@ public class Diccionarios <N,R,A,Al,G,D> extends LinkedList <N>{
         /**
          * Obtiene el nombre
          * @return el nombre de tipo N
+         * Entradas: no recibe ningún parámetro como entrada 
          */
         public N getNombre(){
             return this.nombre;
@@ -64,7 +66,9 @@ public class Diccionarios <N,R,A,Al,G,D> extends LinkedList <N>{
         
         /**
          * Actualiza el nombre
+         * Entrada: 
          * @param nombre de tipo N
+         * Por ser un void no retorna nada
          */
         public void setNombre(N nombre){
             this.nombre=nombre;
@@ -72,7 +76,8 @@ public class Diccionarios <N,R,A,Al,G,D> extends LinkedList <N>{
         
         /**
          * Obtiene la ruta
-         * @return ruta de tipo R
+         * Salida: @return ruta de tipo R
+         * No recibe ningún parámetro como entrada
          */
         
         public R getRuta(){
@@ -82,6 +87,7 @@ public class Diccionarios <N,R,A,Al,G,D> extends LinkedList <N>{
         /**
          * Actualiza la ruta
          * @param ruta de tipo R
+         * No recibe ningún parámetro como entrada
          */
         
         public void setRuta(R ruta){
@@ -91,6 +97,7 @@ public class Diccionarios <N,R,A,Al,G,D> extends LinkedList <N>{
         /**
          * Obtiene el artista
          * @return artista de tipo A
+         * No recibe ningún parámetro como entrada
          */
         
         public A getArtista(){
@@ -170,7 +177,7 @@ public class Diccionarios <N,R,A,Al,G,D> extends LinkedList <N>{
     //constructor 
     
     public Diccionarios (){
-      this.size=0;
+      this.size=0; // tamaño empieza en 0
     }
     
     //métodos
@@ -219,7 +226,7 @@ public class Diccionarios <N,R,A,Al,G,D> extends LinkedList <N>{
     
     
     /**
-     * 
+     * Entrada:
      * @param nombre de tipo N
      * @return la ruta asociada con la canción y sino existe, null.
      */
@@ -239,9 +246,9 @@ public class Diccionarios <N,R,A,Al,G,D> extends LinkedList <N>{
     }
     
     /**
-     * 
-     * @param nombre
-     * @return Elimina el registro asociado a la canción si existe, y retorna la ruta
+     * Entrada: 
+     * @param nombre de tipo N
+     * @return Elimina el registro asociado a la canción si existe, y retorna la ruta de tipo R
      */
     
     public R remove(N nombre){
@@ -262,7 +269,7 @@ public class Diccionarios <N,R,A,Al,G,D> extends LinkedList <N>{
     }
     
     /**
-     * 
+     * No recibe ningún parámetro como entrada
      * @return Retorna una colección con todas las canciones en el map
      */
     
@@ -278,7 +285,7 @@ public class Diccionarios <N,R,A,Al,G,D> extends LinkedList <N>{
     }
     
     /**
-     * 
+     * No recibe ningún parametro como entrada
      * @return  Retorna una colección con todas las rutas en el map
      */
     
@@ -294,7 +301,7 @@ public class Diccionarios <N,R,A,Al,G,D> extends LinkedList <N>{
     }
     
     /**
-     * 
+     * No recibe ningún parámetro como entrada
      * @return  Retorna una colección con todas las artistas en el map
      */
     public ArrayList artistaSet(){
@@ -309,7 +316,7 @@ public class Diccionarios <N,R,A,Al,G,D> extends LinkedList <N>{
     }
     
     /**
-     * 
+     * No recibe ningún parámetro como entrada
      * @return  Retorna una colección con todos los albumes en el map
      */
     
@@ -325,7 +332,7 @@ public class Diccionarios <N,R,A,Al,G,D> extends LinkedList <N>{
     }
     
     /**
-     * 
+     * No recibe ningún parámetro como entrada
      * @return  Retorna una colección con todos los generos en el map
      */
     
@@ -341,7 +348,7 @@ public class Diccionarios <N,R,A,Al,G,D> extends LinkedList <N>{
     }
     
     /**
-     * 
+     * No recibe ingún parámetro como entrada
      * @return  Retorna una colección con todas las duraciones en el map
      */
     
@@ -357,7 +364,7 @@ public class Diccionarios <N,R,A,Al,G,D> extends LinkedList <N>{
     }
     
     /**
-     * 
+     * No recibe ningún parámetro como entrada
      * @return Regresa el número de registros en el diccionario
      */
     
@@ -366,8 +373,9 @@ public class Diccionarios <N,R,A,Al,G,D> extends LinkedList <N>{
     }
     
     /**
-     * 
+     * No recibe ningún parámetro como entrada 
      * @return booleano si está vacío o no 
+     * Restricciones: true si está vacío y false sino
      */
     
     public boolean isEmpty(){
@@ -391,7 +399,7 @@ public class Diccionarios <N,R,A,Al,G,D> extends LinkedList <N>{
     
     
     /**
-     * 
+     * No recibe ningún parámtro como entrada
      * @return Regresa una colección que contiene todos los registros (canción,ruta)
      */
     

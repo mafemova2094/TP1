@@ -124,6 +124,7 @@ public class LinkedList1 <T> implements Serializable{ // LinkedList es genérico
     
     /**
      * elimina un elemento
+     * No recibe ningún parámetro como entrada
      */
     
     public void remove(){
@@ -159,6 +160,7 @@ public class LinkedList1 <T> implements Serializable{ // LinkedList es genérico
     
     /**
      * Vacía la lista
+     * No recibe ningún parámetro como entrada
      */
     
     public void clear(){
@@ -170,7 +172,7 @@ public class LinkedList1 <T> implements Serializable{ // LinkedList es genérico
     }
     
     /**
-     *
+     * No recibe ningún parámetro como entrada
      * ir al elemento siguiente
      */
     
@@ -180,7 +182,7 @@ public class LinkedList1 <T> implements Serializable{ // LinkedList es genérico
     }
     
     /**
-     *
+     * No recibe ningún parámetro como entrada
      * ir al elemento anterior
      */
     
@@ -194,8 +196,8 @@ public class LinkedList1 <T> implements Serializable{ // LinkedList es genérico
     }
     
     /**
-     *
-     * @return el tamaño
+     * No recibe ningún parámetro como entrada
+     * @return el tamaño de tipo int
      */
     
     public int getSize(){
@@ -203,8 +205,8 @@ public class LinkedList1 <T> implements Serializable{ // LinkedList es genérico
     }
     
     /**
-     *
-     * @return la posición
+     * No recibe ningún parámetro como entrada
+     * @return la posición de tipo int
      */
     
     public int getPos(){
@@ -213,6 +215,8 @@ public class LinkedList1 <T> implements Serializable{ // LinkedList es genérico
     
     /**
      * mover al principio de la lista
+     * No recibe ningún parámetro como entrada
+     * Void no retorna
      */
     
     public void goToStart(){
@@ -222,6 +226,7 @@ public class LinkedList1 <T> implements Serializable{ // LinkedList es genérico
     
     /**
      * mover al final de la lista
+     * No recibe ningún parámetro como entrada
      */
     
     public void goToEnd(){
@@ -230,7 +235,7 @@ public class LinkedList1 <T> implements Serializable{ // LinkedList es genérico
     }
     
     /**
-     * 
+     * No recibe ningún parámetro como entrada
      * @return booleano, para saber si la lista está vacía o no 
      */
     

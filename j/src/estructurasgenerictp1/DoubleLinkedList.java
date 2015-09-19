@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package j;
+package estructurasgenerictp1;
 
 /**
  *
@@ -128,6 +128,7 @@ public class DoubleLinkedList <T> {
     
     /**
      * elimina un elemento
+     * No recibe ningún parámetro como entrada
      */
     public void remove(){
         if(this.current==this.head){
@@ -151,6 +152,7 @@ public class DoubleLinkedList <T> {
     /**
      * Modifica el elemento
      * @param element de tipo T
+     * Por ser un void no retorna nada
      */
     public void updateElement(T element){
         this.current.setElement(element);
@@ -158,6 +160,7 @@ public class DoubleLinkedList <T> {
     
     /**
      * Vacía la lista
+     * No recibe ningún parámetro como entrada
      */
     public void clear(){
         this.head=new Node<T>();
@@ -167,7 +170,7 @@ public class DoubleLinkedList <T> {
     }
     
     /**
-     *
+     * No recibe ningún parámetro como entrada
      * @return ir al elemento siguiente
      */
     public Node <T> next(){
@@ -177,8 +180,8 @@ public class DoubleLinkedList <T> {
     }
     
     /**
-     *
-     * @return ir al elemento anterior
+     * No recibe ningún parámetro como entrada
+     * @return ir al elemento anterior de tipo Nodo 
      */
     public Node<T> previous(){
         this.current=this.current.getPrevious();
@@ -187,7 +190,7 @@ public class DoubleLinkedList <T> {
     } 
     
     /**
-     *
+     * No recibe ningún parámetro como entrada
      * @return el tamaño
      */
     public int getSize(){
@@ -195,7 +198,7 @@ public class DoubleLinkedList <T> {
     }
     
     /**
-     *
+     * No recibe ningún parámetro como entrada
      * @return la posición actual
      */
     public int getPos(){
@@ -204,6 +207,7 @@ public class DoubleLinkedList <T> {
     
     /**
      * mover al principio de la lista
+     * No recibe ningún parámetro como entrada
      */
     public void goToStart(){
         this.current=this.head;
@@ -212,6 +216,7 @@ public class DoubleLinkedList <T> {
     
     /**
      * mover al final de la lista
+     * No recibe ningún parámetro como entrada
      */
     public void goToEnd(){
         this.current=this.tail;
@@ -219,7 +224,7 @@ public class DoubleLinkedList <T> {
     }
     
     /**
-     *
+     * Prueba de los métodos
      * @param args
      */
     public static void main(String [] args){

@@ -43,7 +43,7 @@ public class LQueue <T> extends LinkedList <T> {
     
     /**
      * Elimina y regresa el primer elemento de la cola
-     * @return 
+     * @return el primer elemento de la cola 
      */
     
     public T dequeue (){
@@ -60,8 +60,8 @@ public class LQueue <T> extends LinkedList <T> {
     }
     
     /**
-     * 
-     * @return Regresa el primer elemento de la cola
+     * No recibe ningún parámetro como entrada
+     * @return Regresa el primer elemento de la cola de tipo T
      */
     
     public T first(){
@@ -75,8 +75,8 @@ public class LQueue <T> extends LinkedList <T> {
     }
     
     /**
-     * 
-     * @return Regresa el número de elementos en la cola
+     * No recibe ningún parámetro como entrada
+     * @return size de tipo int Regresa el número de elementos en la cola
      */
     
     public int size(){
@@ -84,7 +84,7 @@ public class LQueue <T> extends LinkedList <T> {
     }
     
     /**
-     * 
+     * No recibe ningún parámetro como entrada
      * @return Retorna un booleano indicando si la cola esta vacía
      */
     
@@ -99,6 +99,8 @@ public class LQueue <T> extends LinkedList <T> {
     
     /**
      * Vacía la cola
+     * No recibe ningún parámetro como entrada
+     * Void no retorna
      */
     
     public void clear(){

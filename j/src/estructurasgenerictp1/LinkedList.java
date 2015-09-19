@@ -108,7 +108,8 @@ public class LinkedList <T>{ // LinkedList es genérico de tipo T
     
     /**
      * Obtiene el elemento
-     * @return el elemento que está en el current
+     * @return el elemento que está en el current de tipo T
+     * No recibe ningún parámetro como entrada
      */
     
     public T getElement(){
@@ -122,6 +123,8 @@ public class LinkedList <T>{ // LinkedList es genérico de tipo T
     
     /**
      * elimina un elemento
+     * No recibe ningún parámetro como entrada
+     * No retorna nada
      */
     
     public void remove(){
@@ -148,6 +151,7 @@ public class LinkedList <T>{ // LinkedList es genérico de tipo T
     /**
      * Modifica el elemento
      * @param element de tipo T
+     * Al ser un void no retorna nada
      */
     
     public void updateElement(T element){
@@ -157,6 +161,7 @@ public class LinkedList <T>{ // LinkedList es genérico de tipo T
     
     /**
      * Vacía la lista
+     * No recibe ningún parámetro como entrada
      */
     
     public void clear(){
@@ -168,7 +173,7 @@ public class LinkedList <T>{ // LinkedList es genérico de tipo T
     }
     
     /**
-     *
+     * No recibe ningún parámetro como entrada
      * ir al elemento siguiente
      */
     
@@ -178,7 +183,7 @@ public class LinkedList <T>{ // LinkedList es genérico de tipo T
     }
     
     /**
-     *
+     * No recibe ningún parámetro como entrada
      * ir al elemento anterior
      */
     
@@ -194,6 +199,7 @@ public class LinkedList <T>{ // LinkedList es genérico de tipo T
     /**
      *
      * @return el tamaño
+     * No recibe ningún parámetro como entrada
      */
     
     public int getSize(){
@@ -201,7 +207,7 @@ public class LinkedList <T>{ // LinkedList es genérico de tipo T
     }
     
     /**
-     *
+     * No recibe ningún parámetro como entrada
      * @return la posición
      */
     
@@ -211,6 +217,7 @@ public class LinkedList <T>{ // LinkedList es genérico de tipo T
     
     /**
      * mover al principio de la lista
+     * No recibe ningún parámetro como entrada
      */
     
     public void goToStart(){
@@ -220,6 +227,7 @@ public class LinkedList <T>{ // LinkedList es genérico de tipo T
     
     /**
      * mover al final de la lista
+     * No recibe ningún parámetro como entrada
      */
     
     public void goToEnd(){
@@ -228,7 +236,7 @@ public class LinkedList <T>{ // LinkedList es genérico de tipo T
     }
     
     /**
-     * 
+     * No recibe ningún parámetro como entrada
      * @return booleano, para saber si la lista está vacía o no 
      */
     
