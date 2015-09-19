@@ -27,10 +27,10 @@ public class ObtenerLetra {
  
     /**
      *
-     * @param Artista información requerida
-     * @param Nombre información requerida
+     * Entrada: @param Artista información requerida del artista
+     * Entrada: @param Nombre información requerida del nombre
      * @return letra de la canción 
-     * @throws IOException si no se encuentra la canción
+     * -restriccciones: @throws IOException si no se encuentra la canción
      */
     public  String getLetra( String Artista, String Nombre) throws IOException {
      String letra = Nombre+"\n";
@@ -52,7 +52,7 @@ public class ObtenerLetra {
      * @throws IOException
      */
     public static void main(String args[]) throws IOException{
-       ObtenerLetra h=new ObtenerLetra();
+       ObtenerLetra h=new ObtenerLetra(); // instanciación
        
        System.out.println(h.getLetra("Ricardo Arjona", "Fuiste tu"));
        
