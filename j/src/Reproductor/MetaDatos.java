@@ -14,14 +14,15 @@ import org.jaudiotagger.tag.images.Artwork;
 
 /**
  *
- * @author Mau
+ * @author Mau clase MetaDatos
  */
-public class MetaDatos
-{
-    private String Artista,Album,Titulo,year,BPM,genero,ruta,rutaI=null;
-    private Artwork portada;
-    private int duracion;
-    Tag tag;
+public class MetaDatos {
+    
+    // atributos
+    private String Artista,Album,Titulo,year,BPM,genero,ruta,rutaI=null; // atributos de tipo String que empiezan en null
+    private Artwork portada; // atributo portada de tipo Artwork 
+    private int duracion; // atributo duración de tipo int
+    Tag tag; // atributo tag de tipo tag
 
     /**
      * Constructor
@@ -32,7 +33,9 @@ public class MetaDatos
 
     /**
      * Métodos
-     * @param ruta obtener datos de artista, título, género,... 
+     * @param ruta obtener datos de artista, título, género,... Recibe como Entrada: la ruta del archivo
+     * Salidas: Por ser un void no devuelve nada
+     * Restricciones: try and catch (intentar y atrapar las excepciones) sino se logra desplegar excepción
      */
     public void meta(String ruta){
         this.ruta = ruta;
@@ -89,7 +92,9 @@ public class MetaDatos
     }
 
     /**Función que guarda la imagen 
-     *
+     * Entrada: no recibe nada como entrada
+     * Salidas: por ser un void no devuelve nada
+     * Restricciones: si no se logra atrapar el error la rutaI debe ser null
      */
     public void guardarImagen(){ // método que guarda la imagen 
     try{                         
@@ -115,15 +120,16 @@ public class MetaDatos
     }
 
     /**
-     *
+     *Entrada: no recibe ningún parámetro como entrada
      * @return Obtiene la ruta de la imagen
+     * Retorna la ruta de la imagen
      */
     public String getImagen(){
     return this.rutaI;
     }
 
     /**
-     *
+     * Entrada: no recibe ningún parámetro como entrada
      * @return Obtiene el artista de la canción
      */
     public String getArtista(){
@@ -131,7 +137,7 @@ public class MetaDatos
     }
 
     /**
-     *
+     *Entrada: no recibe ningún parámetro como entrada
      * @return Obtiene el título de tipo de String
      */
     public String getTitulo(){
@@ -139,7 +145,7 @@ public class MetaDatos
     }
 
     /**
-     *
+     *Entrada: no recibe ningún parámetro como entrada
      * @return Obtiene el álbum de la canción de tipo String
      */
     public String getAlbum(){
@@ -147,7 +153,7 @@ public class MetaDatos
     }
 
     /**
-     *
+     * Entrada: no recibe ningún parámetro como entrada
      * @return Obtiene la duración de la canción (de tipo int)
      */
     public int getduracion(){
@@ -155,15 +161,15 @@ public class MetaDatos
     }
 
     /**
-     *
-     * @return transforma la duración en minutos
+     * Entrada: no recibe ningún parámetro como entrada
+     * @return transforma la duración en minutos (de tipo double)
      */
     public double getduracionMin(){
     return duracion/60;
     }
 
     /**
-     *
+     * Entrada: no recibe ningún parámetro como entrada
      * @return Obtiene el género de tipo String
      */
     public String getgenero(){
@@ -171,7 +177,7 @@ public class MetaDatos
     }
 
     /**
-     *
+     * Entrada: recibe como entrada un m de tipo String
      * @param m Recibe como parámetro un m de tipo String y actualiza el título
      */
     public void setTitulo(String m){
@@ -179,7 +185,7 @@ public class MetaDatos
     }
 
     /**
-     *
+     * Entrada: recibe como entrada un artista de tipo String
      * @param artista Recibe como parámetro un artiste de tipo String y actualiza el artista si se modifica
      */
     public void setArtista(String artista){
@@ -188,7 +194,7 @@ public class MetaDatos
    
     /**
      *
-     * @param args Prueba 
+     * @param args Prueba de las funciones anteriores
      */
     public static void main(String args[]){
         

@@ -1,7 +1,7 @@
-package Reproductor;
+package Reproductor; // nombre del paquete
 
-import javazoom.jlgui.basicplayer.BasicPlayer;
-import java.io.File;
+import javazoom.jlgui.basicplayer.BasicPlayer; // librería necesaria
+import java.io.File; // librería necesaria
 
    /**
     * Clase Reproductor
